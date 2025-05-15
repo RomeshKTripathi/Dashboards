@@ -5,7 +5,7 @@ function CardLayout({ icon, title, children, style }) {
   if (!visible) return null;
   return (
     <div
-      className={`w-fit dark:bg-black/30 dark:hover:bg-black/40 dark:border-none bg-white/10 hover:bg-white/20 border border-white/30 rounded-md mt-4   ${style}`}
+      className={`w-fit h-fit dark:bg-black/30 dark:hover:bg-black/40 dark:border-none bg-white/10 hover:bg-white/20 border border-white/30 rounded-md mt-4   ${style}`}
     >
       <div className="h-8 w-full justify-between flex rounded-t-md dark:bg-black/40 bg-white/40 *:self-center gap-10 px-4 select-none">
         <div className="flex gap-2 *:self-center">

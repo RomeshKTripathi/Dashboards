@@ -4,6 +4,7 @@ import users from "../../assets/users.svg";
 import eye from "../../assets/eye.svg";
 import cart from "../../assets/cart.svg";
 import Card from "./Card";
+import { useSelector } from "react-redux";
 const cardData = [
   {
     id: 1,
@@ -37,7 +38,13 @@ const cardData = [
 
 function CardRack() {
   return (
-    <div className="w-full flex gap-5 *:flex-grow flex-wrap">
+    <div
+      className={`w-full overflow-hidden mb-5 bg-transparent flex gap-5 *:flex-grow flex-wrap duration-300 transition-[max-height] ${
+        useSelector((state) => state.custom.show_card_rack)
+          ? "max-h-96"
+          : "max-h-0 my-0"
+      }`}
+    >
       {cardData.map((card) => (
         <Card key={card.id} {...card} />
       ))}

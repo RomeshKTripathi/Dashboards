@@ -1,24 +1,37 @@
-import React, { useContext } from "react";
+import React from "react";
 import Profile from "./Profile";
 import NavIcon from "./NavIcon";
-import { themeContext } from "../../context/sidemenuContext";
+import { switchActiveLink } from "../../store/appSlice";
 import {
   BellIcon,
   MessageBoxIcon,
   SettingsIcon,
   ThemeIcon,
 } from "../../assets/icons";
+import { useDispatch, useSelector } from "react-redux";
 
 function NavAndProfile() {
-  const changeTheme = useContext(themeContext);
+  const dispatch = useDispatch();
 
   return (
     <div className="self-center flex gap-8 *:self-center">
       <div className="flex gap-3">
-        <NavIcon changeTheme={changeTheme} Icon={ThemeIcon} />
-        <NavIcon Icon={MessageBoxIcon} notification={true} />
+        {useSelector((state) => state.custom.quick_access_theme) && (
+          <NavIcon Icon={ThemeIcon} />
+        )}
+        {useSelector((state) => state.custom.quick_access_messages) && (
+          <NavIcon
+            Icon={MessageBoxIcon}
+            notification={true}
+            onClick={() => {
+              dispatch(switchActiveLink("messages"));
+            }}
+          />
+        )}
         <NavIcon Icon={BellIcon} notification={true} />
-        <NavIcon Icon={SettingsIcon} />
+        {useSelector((state) => state.custom.quick_access_settings) && (
+          <NavIcon Icon={SettingsIcon} />
+        )}
       </div>
       <Profile />
     </div>

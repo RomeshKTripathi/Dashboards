@@ -1,17 +1,27 @@
-import React, { useState } from "react";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { switchTheme } from "../store/appSlice";
 
-export const ThemeIcon = ({ style, changeTheme }) => {
-  const [isDark, setIsDark] = useState(
-    document.getElementsByTagName("body")[0].classList.contains("dark")
-  );
+export const ThemeIcon = ({ style }) => {
+  const currentTheme = useSelector((state) => state.app.theme);
+  const dispatch = useDispatch();
+
+  const toggleThemeHandler = () => {
+    const body = document.getElementsByTagName("body");
+    if (currentTheme == "dark") {
+      body[0].classList.remove("dark");
+      dispatch(switchTheme("light"));
+    } else {
+      body[0].classList.add("dark");
+      dispatch(switchTheme("dark"));
+    }
+  };
+
   // const animation
-  if (!isDark)
+  if (currentTheme == "light")
     return (
       <svg
-        onClick={() => {
-          changeTheme();
-          setIsDark((prev) => !prev);
-        }}
+        onClick={toggleThemeHandler}
         xmlns="http://www.w3.org/2000/svg"
         transform="rotate(-45)"
         viewBox="-1.28 -1.28 34.56 34.56"
@@ -26,13 +36,10 @@ export const ThemeIcon = ({ style, changeTheme }) => {
         </g>
       </svg>
     );
-  if (isDark)
+  else
     return (
       <svg
-        onClick={() => {
-          changeTheme();
-          setIsDark((prev) => !prev);
-        }}
+        onClick={toggleThemeHandler}
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
